@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sua Selfie Perfeita em 10 Dias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#F5C518;
+  --primary-hover:#E0B200;
+  --dark:#1a1a2e;
+  --text:#333;
+  --text-light:#666;
+  --bg-white:#fff;
+  --bg-gray:#f7f7f9;
+  --green:#2ecc71;
+  --red:#e74c3c;
+  --shadow:0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.12);
+  --radius:12px;
+  --radius-sm:8px;
+  --transition:.3s ease;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:var(--bg-white);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.page{
+  display:none;
+  min-height:100dvh;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:24px 20px;
+  animation:fadeIn .5s ease;
+}
+.page.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+
+/* ===== START PAGE ===== */
+.start-container{
+  text-align:center;
+  max-width:440px;
+  width:100%;
+}
+.start-icon{
+  font-size:64px;
+  margin-bottom:16px;
+  animation:pulse 2s infinite;
+}
+.start-container h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,6vw,36px);
+  color:var(--dark);
+  line-height:1.3;
+  margin-bottom:12px;
+}
+.start-container p{
+  font-size:16px;
+  color:var(--text-light);
+  margin-bottom:32px;
+  font-weight:400;
+}
+.btn-primary{
+  display:inline-block;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:16px 48px;
+  font-size:17px;
+  font-weight:600;
+  border-radius:50px;
+  cursor:pointer;
+  transition:var(--transition);
+  text-decoration:none;
+  letter-spacing:.3px;
+  box-shadow:0 4px 16px rgba(245,197,24,.45);
+  color:#1a1a2e;
+}
+.btn-primary:hover{
+  background:var(--primary-hover);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(245,197,24,.55);
+}
+.btn-primary:active{transform:translateY(0)}
+
+/* ===== QUESTION PAGES ===== */
+.question-container{
+  max-width:520px;
+  width:100%;
+  text-align:center;
+}
+.progress-bar{
+  width:100%;
+  height:4px;
+  background:#e8e8ec;
+  border-radius:4px;
+  margin-bottom:40px;
+  overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),#f0d060);
+  border-radius:4px;
+  transition:width .5s ease;
+}
+.question-container h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,5vw,26px);
+  color:var(--dark);
+  line-height:1.4;
+  margin-bottom:28px;
+  font-weight:600;
+}
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.option-btn{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fff;
+  border:2px solid #e8e8ec;
+  padding:16px 20px;
+  border-radius:var(--radius);
+  font-size:15px;
+  font-weight:400;
+  color:var(--text);
+  cursor:pointer;
+  transition:var(--transition);
+  line-height:1.5;
+  font-family:'Inter',sans-serif;
+}
+.option-btn:hover{
+  border-color:var(--primary);
+  background:rgba(212,69,106,.04);
+}
+.option-btn.selected{
+  border-color:var(--primary);
+  background:rgba(212,69,106,.08);
+  font-weight:500;
+}
+
+/* ===== RESULTS PAGE ===== */
+.results-page{
+  display:none;
+  flex-direction:column;
+  animation:fadeIn .6s ease;
+}
+.results-page.active{display:flex}
+.section{
+  width:100%;
+  padding:60px 20px;
+}
+.section-inner{
+  max-width:640px;
+  margin:0 auto;
+  text-align:center;
+}
+.section.white{background:var(--bg-white)}
+.section.gray{background:var(--bg-gray)}
+.section h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,5.5vw,34px);
+  color:var(--dark);
+  line-height:1.3;
+  margin-bottom:16px;
+}
+.section h3{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,4.5vw,28px);
+  color:var(--dark);
+  line-height:1.3;
+  margin-bottom:12px;
+}
+.section p{
+  font-size:16px;
+  color:var(--text-light);
+  line-height:1.7;
+  margin-bottom:16px;
+}
+.section .highlight-text{
+  font-size:18px;
+  color:var(--dark);
+  font-weight:500;
+  line-height:1.7;
+}
+.highlight-box{
+  background:#fff;
+  border:1px solid #e8e8ec;
+  border-radius:var(--radius);
+  padding:24px;
+  margin:20px 0;
+  text-align:left;
+  box-shadow:var(--shadow);
+}
+.gray .highlight-box{background:#fff}
+.white .highlight-box{background:var(--bg-gray)}
+.benefit-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:10px;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--text);
+}
+.benefit-item:last-child{margin-bottom:0}
+.benefit-item .icon{flex-shrink:0;font-size:16px;margin-top:3px}
+.sparkle-list{
+  text-align:left;
+  margin:20px 0;
+}
+.sparkle-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:12px;
+  font-size:16px;
+  line-height:1.6;
+  color:var(--text);
+}
+.sparkle-item:last-child{margin-bottom:0}
+
+/* Before/After Cards */
+.ba-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:24px 0;
+}
+@media(max-width:500px){.ba-grid{grid-template-columns:1fr}}
+.ba-card{
+  border-radius:var(--radius);
+  padding:24px 20px;
+  text-align:left;
+}
+.ba-card.before{
+  background:#fff5f5;
+  border:1px solid #fdd;
+}
+.ba-card.after{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+}
+.ba-card h4{
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.ba-card.before h4{color:var(--red)}
+.ba-card.after h4{color:var(--green)}
+.ba-item{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  margin-bottom:8px;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--text);
+}
+.ba-item:last-child{margin-bottom:0}
+
+/* Timer */
+.timer-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+.urgency-text{
+  font-size:15px;
+  font-weight:600;
+  color:var(--red);
+}
+.timer{
+  font-size:22px;
+  font-weight:700;
+  color:var(--red);
+  font-variant-numeric:tabular-nums;
+  background:#fff5f5;
+  padding:6px 16px;
+  border-radius:var(--radius-sm);
+  border:1px solid #fdd;
+}
+
+/* Pricing */
+.price-box{
+  background:#fff;
+  border:2px solid #e8e8ec;
+  border-radius:var(--radius);
+  padding:32px 24px;
+  margin:24px 0;
+  box-shadow:var(--shadow-lg);
+}
+.price-box h3{
+  margin-bottom:8px;
+}
+.price-old{
+  font-size:18px;
+  color:#999;
+  text-decoration:line-through;
+  margin-bottom:4px;
+}
+.price-new{
+  font-size:42px;
+  font-weight:800;
+  color:var(--dark);
+  margin-bottom:20px;
+}
+.price-new span{font-size:20px;font-weight:600}
+
+/* Guarantee */
+.guarantee-box{
+  background:#fff;
+  border:2px solid #e8e8ec;
+  border-radius:var(--radius);
+  padding:28px 24px;
+  margin:20px 0;
+  text-align:center;
+}
+.guarantee-icon{font-size:48px;margin-bottom:12px}
+
+/* Author */
+.author-photo{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:16px;
+  border:4px solid #e8e8ec;
+}
+.author-name{
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  color:var(--dark);
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+/* Content Card */
+.content-card{
+  background:#fff;
+  border:1px solid #e8e8ec;
+  border-radius:var(--radius);
+  padding:24px;
+  margin:16px 0;
+  text-align:left;
+  box-shadow:var(--shadow);
+}
+.content-card h4{
+  font-size:17px;
+  font-weight:700;
+  color:var(--dark);
+  margin-bottom:6px;
+}
+.content-card .subtitle{
+  font-size:13px;
+  font-weight:600;
+  color:#D4456A;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:10px;
+}
+
+/* Misc */
+.divider{
+  width:60px;
+  height:3px;
+  background:#D4456A;
+  border-radius:3px;
+  margin:0 auto 24px;
+}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-24{margin-top:24px}
+.mt-32{margin-top:32px}
+.mb-8{margin-bottom:8px}
+.mb-24{margin-bottom:24px}
+
+/* Responsive */
+@media(min-width:768px){
+  .section{padding:80px 40px}
+  .option-btn{padding:18px 24px;font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== START PAGE ==================== -->
+<div class="page active" id="page-start">
+  <div class="start-container">
+    <div class="start-icon">📱</div>
+    <h1>Sua selfie perfeita começa aqui.</h1>
+    <p>Leva apenas 2 minutos pra responder</p>
+    <button class="btn-primary" onclick="goToPage(1)">Começar</button>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 1 ==================== -->
+<div class="page" id="page-1">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:8.33%"></div></div>
+    <h2>Em qual situação você mais se reconhece hoje quando tenta tirar uma selfie?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,2)">Evito selfies porque quase sempre fico estranha(o) nas fotos</button>
+      <button class="option-btn" onclick="selectOption(this,2)">Tiro selfies às vezes, mas quase nunca gosto do resultado</button>
+      <button class="option-btn" onclick="selectOption(this,2)">Tiro selfies com frequência, mas sinto que poderiam ficar muito melhores</button>
+      <button class="option-btn" onclick="selectOption(this,2)">Gosto de selfies e quero aprender a deixá-las realmente impressionantes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 2 ==================== -->
+<div class="page" id="page-2">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:16.66%"></div></div>
+    <h2>Quão importante é para você melhorar suas fotos pessoais?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,3)">Gostaria de ter selfies melhores do que as que tiro hoje</button>
+      <button class="option-btn" onclick="selectOption(this,3)">Acho importante ter selfies que me valorizam</button>
+      <button class="option-btn" onclick="selectOption(this,3)">Gostaria de ter selfies que chamam mais atenção</button>
+      <button class="option-btn" onclick="selectOption(this,3)">É muito importante! Gostaria de ter fotos que pareçam mais profissionais</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 3 ==================== -->
+<div class="page" id="page-3">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:25%"></div></div>
+    <h2>Quando você olha suas selfies depois de tirar a foto, o que mais costuma te incomodar?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,4)">Meu rosto parece estranho ou diferente do espelho</button>
+      <button class="option-btn" onclick="selectOption(this,4)">A iluminação deixa meu rosto escuro ou com sombras ruins</button>
+      <button class="option-btn" onclick="selectOption(this,4)">Não sei qual ângulo usar e meu rosto fica desproporcional</button>
+      <button class="option-btn" onclick="selectOption(this,4)">Minha expressão fica travada ou artificial</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 4 ==================== -->
+<div class="page" id="page-4">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:33.33%"></div></div>
+    <h2>Quando você tenta tirar uma selfie sozinha(o), qual dificuldade aparece com mais frequência?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,5)">Tiro várias fotos, mas não consigo encontrar o ângulo que valoriza o meu rosto</button>
+      <button class="option-btn" onclick="selectOption(this,5)">Testo diferentes posições e expressões, mas quase nenhuma fica natural</button>
+      <button class="option-btn" onclick="selectOption(this,5)">Nunca sei qual enquadramento funciona melhor</button>
+      <button class="option-btn" onclick="selectOption(this,5)">Preciso fazer muitas selfies pra quem sabe ter uma que eu gosto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 5 ==================== -->
+<div class="page" id="page-5">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:41.66%"></div></div>
+    <h2>O que você acredita que mais dificulta tirar uma selfie realmente boa?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,6)">Não sei qual ângulo usar</button>
+      <button class="option-btn" onclick="selectOption(this,6)">Não entendo como usar a luz</button>
+      <button class="option-btn" onclick="selectOption(this,6)">Não sei como posar naturalmente</button>
+      <button class="option-btn" onclick="selectOption(this,6)">Nunca aprendi um método simples</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 6 ==================== -->
+<div class="page" id="page-6">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:50%"></div></div>
+    <h2>O que normalmente acontece quando você não gosta da selfie que tirou?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,7)">Apago a foto imediatamente</button>
+      <button class="option-btn" onclick="selectOption(this,7)">Guardo a foto, mas nunca posto</button>
+      <button class="option-btn" onclick="selectOption(this,7)">Tiro várias até achar uma aceitável</button>
+      <button class="option-btn" onclick="selectOption(this,7)">Evito tirar selfies no futuro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 7 ==================== -->
+<div class="page" id="page-7">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:58.33%"></div></div>
+    <h2>Como você se sente quando compara suas selfies com as de outras pessoas?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,8)">Sinto que minhas fotos nunca ficam tão bonitas</button>
+      <button class="option-btn" onclick="selectOption(this,8)">Percebo que falta alguma coisa, mas não sei o quê</button>
+      <button class="option-btn" onclick="selectOption(this,8)">Acho que outras pessoas parecem mais naturais nas fotos</button>
+      <button class="option-btn" onclick="selectOption(this,8)">Fico com vontade de aprender a fazer melhor</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 8 ==================== -->
+<div class="page" id="page-8">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:66.66%"></div></div>
+    <h2>Se você continuasse tirando selfies do mesmo jeito de hoje, o que provavelmente aconteceria?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,9)">Eu continuaria evitando tirar fotos</button>
+      <button class="option-btn" onclick="selectOption(this,9)">Continuaria sem gostar do que vejo nas selfies</button>
+      <button class="option-btn" onclick="selectOption(this,9)">Perderia oportunidades de registrar momentos bonitos</button>
+      <button class="option-btn" onclick="selectOption(this,9)">Continuaria me sentindo insegura(o) ao postar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 9 ==================== -->
+<div class="page" id="page-9">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:75%"></div></div>
+    <h2>Como sua autoestima pode ser impactada quando você nunca gosta das próprias selfies?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,10)">Posso me sentir menos confiante</button>
+      <button class="option-btn" onclick="selectOption(this,10)">Posso evitar me expor nas redes sociais</button>
+      <button class="option-btn" onclick="selectOption(this,10)">Posso achar que o problema está em mim</button>
+      <button class="option-btn" onclick="selectOption(this,10)">Posso perder a vontade de me fotografar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 10 ==================== -->
+<div class="page" id="page-10">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:83.33%"></div></div>
+    <h2>Se existisse um jeito simples de aprender ângulo, luz e expressão, isso faria diferença para você?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,11)">Sim, porque eu teria mais segurança</button>
+      <button class="option-btn" onclick="selectOption(this,11)">Sim, porque finalmente entenderia o que fazer</button>
+      <button class="option-btn" onclick="selectOption(this,11)">Sim, porque conseguiria selfies mais bonitas</button>
+      <button class="option-btn" onclick="selectOption(this,11)">Sim, porque isso mudaria muito meu resultado</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 11 ==================== -->
+<div class="page" id="page-11">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:91.66%"></div></div>
+    <h2>O quanto você gostaria de se sentir mais bonita(o) e confiante nas suas selfies?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,12)">Gostaria um pouco</button>
+      <button class="option-btn" onclick="selectOption(this,12)">Gostaria bastante</button>
+      <button class="option-btn" onclick="selectOption(this,12)">Gostaria muito</button>
+      <button class="option-btn" onclick="selectOption(this,12)">Quero muito isso para mim</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUESTION 12 ==================== -->
+<div class="page" id="page-12">
+  <div class="question-container">
+    <div class="progress-bar"><div class="progress-bar-fill" style="width:100%"></div></div>
+    <h2>Você aceitaria seguir um passo a passo simples por 10 dias para transformar suas selfies?</h2>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'results')">Sim, com certeza</button>
+      <button class="option-btn" onclick="selectOption(this,'results')">Sim, se for prático</button>
+      <button class="option-btn" onclick="selectOption(this,'results')">Sim, se eu conseguir aplicar com o celular que já tenho</button>
+      <button class="option-btn" onclick="selectOption(this,'results')">Sim, quero começar o quanto antes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RESULTS PAGE ==================== -->
+<div class="results-page" id="page-results">
+
+  <!-- SESSÃO 1 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <div style="font-size:48px;margin-bottom:16px">🎉</div>
+      <h2>Parabéns! Você está a poucos passos de transformar suas selfies</h2>
+      <div class="divider"></div>
+      <p class="highlight-text">Descubra como tirar sua selfie perfeita em apenas 10 dias, mesmo que você ache que não é fotogênica(o)</p>
+      <p style="margin-top:20px">Se você chegou até aqui, provavelmente já percebeu algo importante:</p>
+      <p style="font-size:20px;font-weight:700;color:var(--dark);margin-top:12px">O problema das suas selfies não é você.</p>
+      <p>Você apenas ainda não conhece os segredos de uma boa selfie.</p>
+    </div>
+  </div>
+
+  <!-- SESSÃO 2 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <h3>Com o método certo, qualquer pessoa pode aprender a:</h3>
+      <div class="sparkle-list" style="max-width:440px;margin:24px auto">
+        <div class="sparkle-item"><span>✨</span><span>Valorizar o próprio rosto nas fotos</span></div>
+        <div class="sparkle-item"><span>✨</span><span>Usar o ângulo certo para destacar seus melhores traços</span></div>
+        <div class="sparkle-item"><span>✨</span><span>Aproveitar a luz para deixar a selfie mais bonita</span></div>
+        <div class="sparkle-item"><span>✨</span><span>Postar fotos com mais confiança nas redes sociais</span></div>
+      </div>
+      <a href="https://pay.hotmart.com/U105215956M" target="_blank" class="btn-primary">Quero fazer selfies incríveis</a>
+    </div>
+  </div>
+
+  <!-- SESSÃO 3 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <p style="color:var(--text-light);font-size:15px;margin-bottom:8px">E é exatamente isso que você vai aprender no:</p>
+      <h2>Sua Selfie Perfeita em 10 Dias</h2>
+      <div class="divider"></div>
+      <p>Um desafio simples, prático e direto ao ponto que vai ensinar você a tirar selfies incríveis usando apenas seu celular.</p>
+    </div>
+  </div>
+
+  <!-- SESSÃO 4 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <h2>Veja a transformação</h2>
+      <div class="divider"></div>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <h4>❌ Antes</h4>
+          <div class="ba-item"><span>•</span><span>Luz ruim que não valoriza o rosto</span></div>
+          <div class="ba-item"><span>•</span><span>Ângulo errado que distorce a aparência</span></div>
+          <div class="ba-item"><span>•</span><span>Fundo bagunçado chamando mais atenção que a pessoa</span></div>
+          <div class="ba-item"><span>•</span><span>Configurações erradas do celular</span></div>
+          <div class="ba-item"><span>•</span><span>Fotos sem foco ou sem destaque</span></div>
+        </div>
+        <div class="ba-card after">
+          <h4>✅ Depois</h4>
+          <div class="ba-item"><span>•</span><span>Iluminação correta valorizando seu rosto</span></div>
+          <div class="ba-item"><span>•</span><span>Ângulo que destaca seus melhores traços</span></div>
+          <div class="ba-item"><span>•</span><span>Fundo mais limpo e agradável</span></div>
+          <div class="ba-item"><span>•</span><span>Ajustes corretos no celular</span></div>
+          <div class="ba-item"><span>•</span><span>Edição simples que melhora a foto</span></div>
+          <div class="ba-item"><span>•</span><span>Selfies bonitas, naturais e confiantes</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 5 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <div class="timer-wrapper">
+        <span class="urgency-text">Oferta válida nos próximos 5 minutos</span>
+        <span class="timer" id="countdown">05:00</span>
+      </div>
+      <h2 style="margin-top:24px">Comece agora o desafio</h2>
+      <div class="price-box">
+        <h3>Desafio Sua Selfie Perfeita em 10 Dias</h3>
+        <p style="font-size:16px;color:var(--text-light);margin-bottom:4px">Antes você pagaria</p>
+        <p class="price-old">R$147</p>
+        <p style="font-size:16px;color:var(--text-light);margin-bottom:4px;margin-top:8px">Mas se você entrar agora, sairá por apenas</p>
+        <div class="price-new" style="font-size:52px;color:#2ecc71">R$67<span style="font-size:24px;font-weight:600;vertical-align:super">,00</span></div>
+        <a href="https://pay.hotmart.com/U105215956M" target="_blank" class="btn-primary" style="width:100%;display:block;text-align:center">QUERO COMEÇAR O DESAFIO AGORA</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 6 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <h2>O que você vai receber</h2>
+      <div class="divider"></div>
+      <p>Um caminho simples para evoluir um pouco a cada dia.</p>
+      <div class="highlight-box">
+        <div class="benefit-item"><span class="icon">✔</span><span>Aprender passo a passo como tirar selfies bonitas</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Melhorar ângulos, poses e iluminação</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Evoluir um pouco a cada dia</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Se sentir cada vez mais confiante</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Receber elogios pelas selfies</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 7 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <h2>O que está dentro do desafio</h2>
+      <div class="divider"></div>
+      <p>Um desafio com 10 aulas práticas, onde a cada dia você aprende um novo ajuste simples que transforma suas selfies. Além disso você ainda vai ter:</p>
+
+      <!-- Checklist -->
+      <div class="content-card">
+        <div class="subtitle">Bônus 1</div>
+        <h4>✅ Checklist da Selfie Perfeita</h4>
+        <div style="margin-top:12px">
+          <div class="benefit-item"><span class="icon">✔</span><span>Garantir que todos os elementos da foto estejam corretos</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Melhorar qualquer selfie em poucos segundos</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Criar consistência nas fotos</span></div>
+        </div>
+      </div>
+
+      <!-- Guia de Poses -->
+      <div class="content-card">
+        <div class="subtitle">Bônus 2</div>
+        <h4>📐 Guia de Poses para Selfies</h4>
+        <div style="margin-top:12px">
+          <div class="benefit-item"><span class="icon">✔</span><span>Saber como posicionar o rosto</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Aprender poses naturais</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Evitar poses travadas</span></div>
+        </div>
+      </div>
+
+      <!-- Guia de Apps -->
+      <div class="content-card">
+        <div class="subtitle">Bônus 3</div>
+        <h4>📱 Guia de Apps de Edição</h4>
+        <div style="margin-top:12px">
+          <div class="benefit-item"><span class="icon">✔</span><span>Melhorar fotos em poucos cliques</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Ajustar brilho, contraste e cor</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Deixar a selfie mais profissional</span></div>
+        </div>
+      </div>
+
+      <!-- Certificado -->
+      <div class="content-card">
+        <div class="subtitle">Bônus 4</div>
+        <h4>🏆 Certificado Digital</h4>
+        <div style="margin-top:12px">
+          <div class="benefit-item"><span class="icon">✔</span><span>Reconhecimento por concluir o desafio</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Sensação de conquista</span></div>
+          <div class="benefit-item"><span class="icon">✔</span><span>Incentivo para completar os 10 dias</span></div>
+        </div>
+      </div>
+
+      <!-- Suporte -->
+      <div class="content-card">
+        <div class="subtitle">Suporte</div>
+        <h4>💬 Suporte durante o desafio</h4>
+        <p style="margin:10px 0 6px;font-size:15px;color:var(--text-light)">Você não estará sozinho.</p>
+        <p style="margin-bottom:12px;font-size:15px;color:var(--text-light)">Ao entrar no desafio você terá acesso a um grupo exclusivo no WhatsApp, onde poderá:</p>
+        <div class="benefit-item"><span class="icon">✔</span><span>Tirar dúvidas</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Compartilhar suas fotos</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Acompanhar a evolução de outros participantes</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Receber incentivo para completar os 10 dias</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 8 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <h2>Comece agora</h2>
+      <div class="price-box" style="background:var(--bg-white)">
+        <h3>Sua Selfie Perfeita em 10 Dias</h3>
+        <p style="font-size:16px;color:var(--text-light);margin-bottom:4px">De <span style="text-decoration:line-through">R$147</span></p>
+        <p style="font-size:16px;color:var(--text-light);margin-bottom:4px;margin-top:8px">Por apenas</p>
+        <div class="price-new" style="font-size:52px;color:#2ecc71">R$67<span style="font-size:24px;font-weight:600;vertical-align:super">,00</span></div>
+        <a href="https://pay.hotmart.com/U105215956M" target="_blank" class="btn-primary" style="width:100%;display:block;text-align:center">Quero começar o desafio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 9 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <div class="guarantee-box">
+        <img src="garantia7dias.png" alt="Garantia de 7 dias" style="max-width:180px;margin-bottom:16px">
+        <p style="margin-top:12px">Você pode testar o desafio sem nenhum risco.</p>
+        <p>Se dentro de 7 dias você perceber que o desafio não é para você, basta solicitar o reembolso e 100% do seu dinheiro será devolvido.</p>
+        <p style="font-weight:600;color:var(--dark);margin-top:12px">Sem perguntas. Sem complicação.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 10 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <h2>Quem criou este desafio</h2>
+      <div class="divider"></div>
+      <img src="fotoeduardo.jpg" alt="Eduardo - Fotógrafo Profissional" class="author-photo">
+      <p class="author-name">Eduardo Brito</p>
+      <p style="font-weight:600;color:var(--dark);margin-bottom:16px">Fotógrafo profissional há mais de 10 anos</p>
+      <p>Ao longo da carreira ele já fotografou casamentos, eventos, esportes, retratos em estúdio e fotografia gastronômica.</p>
+      <p>Além disso, Eduardo é <span style="font-weight:700;color:var(--dark);background:linear-gradient(180deg,transparent 60%,rgba(245,197,24,.35) 60%);padding:0 4px">Embaixador da Adobe Internacional</span>, uma das maiores empresas de fotografia e edição do mundo.</p>
+      <p>Sua abordagem mistura técnica profissional com um olhar artístico, poético e acessível, tornando a fotografia algo simples, prazeroso e possível de aprender por qualquer pessoa.</p>
+    </div>
+  </div>
+
+  <!-- SESSÃO 11 - Branco (ímpar) -->
+  <div class="section white">
+    <div class="section-inner">
+      <h2>Última chance para começar</h2>
+      <div class="divider"></div>
+      <p style="font-size:18px;font-weight:500;color:var(--dark);margin-bottom:20px">Imagina você daqui há 10 dias:</p>
+      <div class="highlight-box">
+        <div class="benefit-item"><span class="icon">✔</span><span>Você olhando para suas fotos e gostando do que vê</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Postando selfies com mais confiança</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Recebendo mais elogios e curtidas</span></div>
+        <div class="benefit-item"><span class="icon">✔</span><span>Registrando momentos importantes com fotos incríveis</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÃO 12 - Cinza (par) -->
+  <div class="section gray">
+    <div class="section-inner">
+      <p style="font-size:20px;font-weight:600;color:var(--dark);margin-bottom:8px">Tudo isso começa com uma decisão.</p>
+      <h2>Entre agora no desafio</h2>
+      <div style="margin-top:24px">
+        <a href="https://pay.hotmart.com/U105215956M" target="_blank" class="btn-primary" style="padding:18px 40px;font-size:18px">QUERO MINHA SELFIE PERFEITA</a>
+      </div>
+      <p style="margin-top:32px;font-size:13px;color:#999">© 2026 Sua Selfie Perfeita em 10 Dias. Todos os direitos reservados.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function goToPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target=document.getElementById('page-'+n);
+  if(target){
+    target.classList.add('active');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+}
+
+function selectOption(btn,next){
+  const container=btn.closest('.options');
+  container.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  setTimeout(()=>{
+    if(next==='results'){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      const results=document.getElementById('page-results');
+      results.classList.add('active');
+      window.scrollTo({top:0,behavior:'instant'});
+      startCountdown();
+    }else{
+      goToPage(next);
+    }
+  },400);
+}
+
+/* Countdown Timer */
+let countdownInterval;
+function startCountdown(){
+  let total=5*60;
+  const el=document.getElementById('countdown');
+  if(countdownInterval)clearInterval(countdownInterval);
+  countdownInterval=setInterval(()=>{
+    if(total<=0){clearInterval(countdownInterval);el.textContent='00:00';return}
+    total--;
+    const m=Math.floor(total/60);
+    const s=total%60;
+    el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  },1000);
+}
+</script>
+</body>
+</html>
